@@ -1,0 +1,83 @@
+{
+  "schema": {
+    "type": "object",
+    "properties": {
+      "supplier": {
+        "type": "string",
+        "description": "Name of the supplier issuing the order confirmation: the company name in the letterhead (German: Lieferant, Absender)."
+      },
+      "orderNumber": {
+        "type": "string",
+        "description": "The supplier's own order confirmation number (Order confirmation no., Acknowledgement no., Sales order no., Our reference; German: Auftragsbestätigung Nr., AB-Nr., Beleg-Nr., Auftragsnummer, Bestellbestätigung Nr.), exactly as printed. Not the customer's purchase order number (Your order, Customer PO; German: Ihre Bestellung, Ihre Bestell-Nr.)."
+      },
+      "orderDate": {
+        "type": "string",
+        "description": "Date of the order confirmation (Date, Document date, Acknowledgement date; German: Datum, Belegdatum, AB-Datum) copied exactly as printed, for example 02/10/2026, October 5, 2026 or 07.10.2026. Never reformat."
+      },
+      "customerNumber": {
+        "type": "string",
+        "description": "The customer number assigned by the supplier (Customer no., Customer number, Account no.; German: Kundennummer, Kunden-Nr., Kd.-Nr.), exactly as printed. Not the order confirmation number."
+      },
+      "lineItems": {
+        "type": "array",
+        "description": "One entry per position of the line-item table (German: Positionen). Multi-line cells belong to the same position until the next position number.",
+        "items": {
+          "type": "object",
+          "properties": {
+            "position": {
+              "type": "string",
+              "description": "Position number (Pos., Line, Item; German: Pos., Position) exactly as printed, for example 001, 10 or 1."
+            },
+            "partNumber": {
+              "type": "string",
+              "description": "The supplier's own article or part number (Part no., Item, Article; German: Artikel-Nr., Art.-Nr., Materialnummer, Teilenummer)."
+            },
+            "customerPartNumber": {
+              "type": "string",
+              "description": "The customer's article or part number if printed (Your part no., Customer part no., Customer article; German: Ihre Artikel-Nr., Kunden-Artikel-Nr., Ihre Materialnummer). Empty string if absent."
+            },
+            "description": {
+              "type": "string",
+              "description": "Article description (Description; German: Bezeichnung, Artikelbezeichnung, Beschreibung) of the position, all its description lines joined with a space, without the customer part number line and without the delivery date line."
+            },
+            "quantity": {
+              "type": "number",
+              "description": "Ordered quantity (Qty, Quantity; German: Menge, Anzahl) as a plain number with dot decimal separator and no thousands separator, for example 1000 for 1,000 or 1.000, and 1.5 for 1,5."
+            },
+            "unit": {
+              "type": "string",
+              "description": "Unit of the quantity (Unit, UoM; German: Einheit, ME, Mengeneinheit) exactly as printed, for example pcs, ea, m, kg, Stk."
+            },
+            "unitPrice": {
+              "type": "number",
+              "description": "Net unit price (Unit price, Price, Price each; German: Einzelpreis, E-Preis, Preis/Einheit) as a plain number with dot decimal, for example 1234.50 for 1,234.50 or 1.234,50. If the price refers to a price unit (per 100, per 1000; German: PE), still return the printed price."
+            },
+            "totalPrice": {
+              "type": "number",
+              "description": "Net total of the position (Total, Extended, Line value, Amount; German: Gesamtpreis, G-Preis, Betrag, Positionswert) as a plain number with dot decimal."
+            },
+            "deliveryDate": {
+              "type": "string",
+              "description": "Delivery date or calendar week of this position (Delivery date, Delivery week, Delivery; German: Liefertermin, Lieferdatum, Lieferwoche, KW) copied exactly as printed, for example 20/10/2026, 16.10.2026, CW 42/2026 or KW 42/2026. A delivery line printed under a position belongs to that position. Never reformat."
+            }
+          },
+          "required": [
+            "position",
+            "partNumber",
+            "description",
+            "quantity",
+            "unit",
+            "unitPrice",
+            "totalPrice"
+          ]
+        }
+      }
+    },
+    "required": [
+      "supplier",
+      "orderNumber",
+      "orderDate",
+      "lineItems"
+    ]
+  }
+}
